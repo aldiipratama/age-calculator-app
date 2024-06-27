@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Age calculator app</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        fontFamily: {
+          "Poppins": ["'Poppins'", 'sans-serif']
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="font-Poppins bg-slate-400">
+
+  <main class="w-full min-h-[90vh] flex justify-center items-center">
+    <div class="bg-white text-black rounded-[10%] rounded-br-[30%] p-10 mx-5">
+      <form class="flex flex-col gap-4" id="form">
+        <div class="flex gap-4 justify-center">
+          <div class="flex flex-col">
+            <label for="day" class="text-slate-500 font-bold text-sm">Day</label>
+            <input type="number" name="day" id="day" placeholder="DD" class="border p-1 font-bold rounded-md" min="1"
+              max="31" required oninvalid="setCustomValidity('Must be a valid day')" oninput="setCustomValidity('')">
+          </div>
+          <div class="flex flex-col">
+            <label for="month" class="text-slate-500 font-bold text-sm">Month</label>
+            <input type="number" name="month" id="month" placeholder="MM" min="1" max="12"
+              class="border p-1 font-bold rounded-md" required oninvalid="setCustomValidity('Must be a valid month')"
+              oninput="setCustomValidity('')">
+          </div>
+          <div class="flex flex-col">
+            <label for="year" class="text-slate-500 font-bold text-sm">Year</label>
+            <input type="number" name="year" id="year" placeholder="YYYY" class="border p-1 font-bold rounded-md"
+              min="1000" max="9999" required oninvalid="setCustomValidity('Must be a valid year')"
+              oninput="setCustomValidity('')">
+          </div>
+        </div>
+        <div class="flex gap-2 items-center relative mt-10">
+          <span class="w-full h-[.1rem] bg-slate-500"></span>
+          <button type="submit" class="bg-purple-500 rounded-full p-2 absolute left-1/2 -translate-x-1/2">
+            <img src="./assets/images/icon-arrow.svg" alt="icon-arrow">
+          </button>
+        </div>
+      </form>
+      <div class="flex flex-col gap-2 pt-10">
+        <div class="flex gap-1">
+          <span class="text-purple-500 font-bold text-6xl" id="years">--</span>
+          <p class="font-bold text-5xl self-end">years</p>
+        </div>
+        <div class="flex gap-1">
+          <span class="text-purple-500 font-bold text-6xl" id="months">--</span>
+          <p class="font-bold text-5xl self-end">months</p>
+        </div>
+        <div class="flex gap-1">
+          <span class="text-purple-500 font-bold text-6xl" id="days">--</span>
+          <p class="font-bold text-5xl self-end">days</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p class="text-center">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        class="relative inline-block before:absolute before:block before:-skew-y-3 before:-inset-1 before:bg-blue-500 ms-1"><span
+          class="relative text-white">Frontend Mentor</span></a>. Coded with ♥ by
+      <a href="https://instagram.com/alx.dyy"
+        class="relative inline-block before:absolute before:block before:-skew-y-3 before:-inset-1 before:bg-blue-500 ms-1"><span
+          class="relative text-white">aldiipratama</span></a>.
+    </p>
+  </footer>
+
+  <script>
+    const form = document.getElementById("form")
+    const showDays = document.getElementById("days")
+    const showMonths = document.getElementById("months")
+    const showYears = document.getElementById("years")
+    const currentDate = new Date()
+    const currentDay = currentDate.getDate()
+    const currentMonth = currentDate.getMonth()
+    const second = 1000
+    const minute = second * 60
+    const hour = minute * 60
+    const day = hour * 24
+    const month = day * 31
+    const year = month * 12
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault()
+      const userInput = new Date(form.year.value, form.month.value - 1, form.day.value)
+      const getYear = Math.floor((currentDate - userInput) / year)
+      const getMonth = 12 + (currentMonth - userInput.getMonth())
+      const getDay = currentDay - userInput.getDate()
+
+      const x = setInterval(() => {
+        showYears.innerHTML = Math.floor(1 + Math.random() * 99)
+        showMonths.innerHTML = Math.floor(1 + Math.random() * 12)
+        showDays.innerHTML = Math.floor(1 + Math.random() * 31)
+      }, 100)
+
+      setTimeout(() => {
+        clearInterval(x)
+        showYears.innerHTML = getYear
+        showMonths.innerHTML = getMonth
+        showDays.innerHTML = getDay
+      }, 1500)
+    })
+  </script>
+</body>
+
+</html>
